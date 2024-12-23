@@ -1,0 +1,75 @@
+/* Modal Background */
+.modal-overlay {
+    display: none; /* Awalnya modal tidak terlihat */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Transisi untuk membuat fade-in */
+}
+    
+/* Modal Aktif */
+.modal-overlay.active {
+    display: block; /* Muncul jika aktif */
+    opacity: 1;
+}
+
+/* Modal Konten */
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Mulai dengan ukuran lebih kecil */
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 60;
+    opacity: 0;
+    transition: all 0.3s ease-in-out; /* Efek animasi smooth pada semua perubahan */
+}
+
+/* Modal Konten Aktif */
+.modal-overlay.active .modal-content {
+    transform: translate(-50%, -50%) scale(1); /* Skala kembali ke ukuran normal */
+    opacity: 1;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+/* Flash Message Styles */
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 0.5s ease-out; /* Transisi menghilang */
+}
+
+.alert-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.alert-error {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Kotak Tantangan */
+.bg-white {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.bg-white:hover {
+    transform: scale(1.05); /* Efek zoom kecil */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Bayangan saat hover */
+}

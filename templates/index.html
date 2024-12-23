@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>CTF Challenge</title>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white p-4 text-center">
+        <h1 class="text-2xl">Welcome to CTF Challenge</h1>
+        <p class="mt-2">Logged in as: <strong>{{ session['username'] }}</strong></p>
+        <a href="{{ url_for('auth.logout') }}" class="text-white hover:underline">Logout</a>
+    </header>
+    <main class="p-4">
+        <!-- Menampilkan pesan flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages mb-4">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" id="alert-{{ loop.index }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <h2 class="text-lg font-bold mb-4">Cryptography Challenges</h2>
+
+        <!-- Kotak Tantangan -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Challenge Cryptography -->
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Cryptography</h2>
+                <p class="text-sm text-gray-600">Level: Easy</p>
+                <button class="open-modal bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <!-- Challenge Number -->
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Number</h2>
+                <p class="text-sm text-gray-600">Level: Easy</p>
+                <button class="open-modal-number bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+              <!-- Challenge SuperBasic -->
+        <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">SuperBasic</h2>
+            <p class="text-sm text-gray-600">Level: Easy</p>
+            <button class="open-modal-superbasic bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                Open Challenge
+            </button>
+        </div>
+
+          
+          <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">fusion</h2>
+            <p class="text-sm text-gray-600">Level: Easy</p>
+            <button class="open-modal-fusion bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                Open Challenge
+            </button>
+        </div>
+
+        <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Beep-beep</h2>
+            <p class="text-sm text-gray-600">Level: Medium</p>
+            <button class="open-modal-morse bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                Open Challenge
+            </button>
+        </div>
+
+        <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Repetition</h2>
+            <p class="text-sm text-gray-600">Level: Easy</p>
+            <button class="open-modal-repetition bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                Open Challenge
+            </button>
+        </div>
+
+
+        
+        </div>
+
+        <!-- Modal Cryptography -->
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-cryptography">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Cryptography Challenge</h2>
+                <p class="mb-4">Dua Enkripsi Dasar</p>
+                <a href="{{ url_for('static', filename='flag/cryptograph/chall.py') }}" 
+                   download="chall.py" 
+                   class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('cryptography1') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                           class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <!-- Modal Number -->
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-number">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Number Challenge</h2>
+                <p class="mb-4">Terdapat sebuah rahasia dibalik angka</p>
+                <a href="{{ url_for('static', filename='flag/number/Secret.png') }}" 
+                   download="Secret.png" 
+                   class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('number') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                           class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        
+              
+
+        <!-- Modal SuperBasic -->
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-superbasic">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">SuperBasic Challenge</h2>
+                <p class="mb-4">u ii aio iii a i 13x</p>
+                <a href="{{ url_for('static', filename='flag/superbasic/openThis.txt') }}" 
+                download="openThis.txt" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('superbasic') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+
+        <!--modal fusion -->
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-fusion">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Fusion </h2>
+                <p class="mb-4">Temannya ROT4 tapi ditemani lagi dengan enkripsi yang familiar</p>
+                <a href="{{ url_for('static', filename='flag/fusion/hello_world') }}" 
+                download="hello_world" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('fusion') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <!-- modal morse-->
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-morse">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Beep-beep </h2>
+                <p class="mb-4">Beep beeep beep beep</p>
+                <a href="{{ url_for('static', filename='flag/morse/morse.wav') }}" 
+                download="morse.wav" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('morse') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-repetition">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Repetiton </h2>
+                <p class="mb-4">Mirip Matryoshka Doll tapi bukan folder</p>
+                <a href="{{ url_for('static', filename='flag/repetition/flag') }}" 
+                download="flag" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('repetition') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <h2 class="text-lg font-bold mb-4 mt-9 ">Forensic Challenges</h2>
+
+        <!-- Kotak Tantangan -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Cat.png</h2>
+                <p class="text-sm text-gray-600">Level: Easy</p>
+                <button class="open-modal-cat bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Pesan_khusus</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-pesan bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Hiu</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-hiu bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Esp32</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-esp bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Flag?</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-flag bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+        
+
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-cat">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Cat.png </h2>
+                <p class="mb-4">Ntah coba cek belakang fotonya</p>
+                <a href="{{ url_for('static', filename='flag/cat/cat.png') }}" 
+                download="cat.png" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('cat') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-pesan">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Pesan_Khusus </h2>
+                <p class="mb-4">silahkan dilihat bukan didengarkan</p>
+                <a href="{{ url_for('static', filename='flag/pesan/secret.wav') }}" 
+                download="secret.wav" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('pesan') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-hiu">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Hiu </h2>
+                <p class="mb-4">Silahkan berselancar</p>
+                <a href="{{ url_for('static', filename='flag/hiu/flag.pcapng') }}" 
+                download="flag.pcapng" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('hiu') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-esp">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Esp32 </h2>
+                <p class="mb-4">Tau Microcontroller? kira-kira begitulah</p>
+                <a href="{{ url_for('static', filename='flag/esp/firmware.bin') }}" 
+                download="firmware.bin" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('esp') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-flag">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Flag? </h2>
+                <p class="mb-4">mungkin di belakang fotonya kayak tadi</p>
+                <a href="{{ url_for('static', filename='flag/flagg/cat.jpg') }}" 
+                download="cat.jpg" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('flag') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+
+    <h2 class="text-lg font-bold mb-4 mt-9 ">Reverse Engineering Challenges</h2>
+
+        <!-- Kotak Tantangan -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">XOR</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-XOR bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+            <div class="challenge-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Hidden Secrets in the Code</h2>
+                <p class="text-sm text-gray-600">Level: Medium</p>
+                <button class="open-modal-ehe bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-4 rounded transition-colors">
+                    Open Challenge
+                </button>
+            </div>
+
+
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-XOR">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">XOR </h2>
+                <p class="mb-4">Anda akan menghadapi sebuah executable yang menyimpan rahasia dalam bentuk flag yang tersembunyi, namun tidak seperti yang Anda bayangkan.
+
+                    Program ini menggunakan teknik obfuscation yang tampaknya sederhana namun menyimpan lapisan misteri. Apakah Anda cukup cerdas untuk membongkar teka-teki ini?</p>
+                <a href="{{ url_for('static', filename='flag/challenge/challenge') }}" 
+                download="challange" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('XOR') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center" id="modal-ehe">
+            <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md">
+                <h2 class="text-xl font-bold mb-4">Hidden Secrets in the Code</h2>
+                <p class="mb-4">Dalam tantangan ini, Anda akan menghadapi sebuah skrip Python yang menyembunyikan pesan rahasia menggunakan algoritma enkripsi yang kompleks. Skrip ini menggabungkan beberapa teknik obfuscation, termasuk substitusi karakter, enkripsi Caesar, dan encoding Base64 untuk menciptakan sebuah flag yang tersembunyi.</p>
+                <a href="{{ url_for('static', filename='flag/secret/chall') }}" 
+                download="chall" 
+                class="bg-green-500 text-white px-4 py-2 rounded inline-block mb-4">Download File</a>
+                <form method="POST" action="{{ url_for('ehe') }}">
+                    <input type="text" name="flag" placeholder="Masukkan flag" 
+                        class="border px-3 py-2 rounded w-full mb-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                </form>
+                <button class="close-modal text-red-500 hover:underline mt-2">Tutup</button>
+            </div>
+        </div>
+
+
+        
+
+    </main>
+    <footer class="bg-gray-800 text-white text-center p-4">
+        <p>&copy; 2024 CTF Organizer</p>
+    </footer>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

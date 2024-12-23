@@ -1,0 +1,22 @@
+capstone/
+│
+├── web/
+│   ├── app.py
+│   ├── functions/
+│   │   ├── cryptograph.py
+│   │   ├── auth.py
+│   │   └── databases.py
+│   └── templates/
+│       ├── index.html
+│       ├── login.html
+│       └── register.html
+├── static/
+│   ├── styles.css
+│   ├── scripts.js
+│   └── flag/
+│       ├── cryptograph/
+│       │   ├── chall.py
+│       ├── number/
+│       │   ├── Secret.png
+│       └── superbasic/
+│           ├── openThis.txt
